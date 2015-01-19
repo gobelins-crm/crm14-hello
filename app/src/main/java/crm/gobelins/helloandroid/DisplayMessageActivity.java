@@ -1,30 +1,38 @@
 package crm.gobelins.helloandroid;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.EditText;
+import android.widget.TextView;
 
 
-public class MainActivity extends ActionBarActivity {
-    static final String MESSAGE = "crm.gobelins.helloandroid.MESSAGE";
-    private static final String TAG = "MAIN_ACTIVITY";
+public class DisplayMessageActivity extends ActionBarActivity {
+
+    private static final String TAG = "DISPLAY_MESSAGE_ACTIVITY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+
+        Intent intent = getIntent();
+        String message = intent.getStringExtra(MainActivity.MESSAGE);
+
+        Log.d(TAG, message);
+
+        TextView textView = new TextView(this);
+        textView.setText(message);
+
+        setContentView(textView);
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_display_message, menu);
         return true;
     }
 
@@ -42,16 +50,4 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-
-    public void sendMessage(View view) {
-        EditText editText = (EditText) findViewById(R.id.edit_message);
-        String message = editText.getText().toString();
-
-        Log.d(TAG, message);
-
-        Intent intent = new Intent(this, DisplayMessageActivity.class);
-        intent.putExtra(MESSAGE, message);
-        startActivity(intent);
-    }
-
 }
