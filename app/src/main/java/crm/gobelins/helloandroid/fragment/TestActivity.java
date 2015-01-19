@@ -1,31 +1,36 @@
 package crm.gobelins.helloandroid.fragment;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import crm.gobelins.helloandroid.R;
+import crm.gobelins.helloandroid.fragment.dummy.DummyContent;
 
-public class TestActivity extends ActionBarActivity implements EditMessageFragment.OnSendClickListener {
+public class TestActivity extends ActionBarActivity implements EditMessageFragment.OnSendClickListener, ItemFragment.OnFragmentInteractionListener {
 
     private static final String TAG = "TEST_ACTIVITY";
+    private ItemFragment mItemFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
+        DummyContent.readFromPrefs(this);
+
+        mItemFragment = new ItemFragment();
+
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .add(R.id.container_edit, new EditMessageFragment())
+                    .add(R.id.container_display, mItemFragment)
                     .commit();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -53,11 +58,12 @@ public class TestActivity extends ActionBarActivity implements EditMessageFragme
     public void onSendClick(String message) {
         Log.d(TAG, message);
 
-        Fragment displayFragment = DisplayMessageFragment.newInstance(message);
+        DummyContent.addAndSaveItem(this, new DummyContent.DummyItem(
+                String.valueOf(DummyContent.ITEMS.size()), message));
+    }
 
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.container_display, displayFragment)
-                .commit();
+    @Override
+    public void onFragmentInteraction(String id) {
+        Log.d(TAG, id);
     }
 }
