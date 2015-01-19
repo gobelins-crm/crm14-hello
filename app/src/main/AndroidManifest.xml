@@ -24,6 +24,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="crm.gobelins.helloandroid.MainActivity" />
         </activity>
+        <activity
+            android:name=".fragment.TestActivity"
+            android:label="@string/title_activity_test" >
+        </activity>
     </application>
 
 </manifest>
