@@ -43,7 +43,7 @@ public class EditMessageFragment extends Fragment {
             public void onClick(View v) {
                 Log.d(TAG, mEditText.toString());
 
-                mListener.onSendClick(mEditText.toString());
+                mListener.onSendClick(mEditText.getText().toString());
             }
         });
 

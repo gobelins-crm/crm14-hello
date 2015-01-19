@@ -1,6 +1,7 @@
 package crm.gobelins.helloandroid.fragment;
 
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -20,7 +21,7 @@ public class TestActivity extends ActionBarActivity implements EditMessageFragme
         if (savedInstanceState == null) {
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.container, new EditMessageFragment())
+                    .add(R.id.container_edit, new EditMessageFragment())
                     .commit();
         }
     }
@@ -51,5 +52,12 @@ public class TestActivity extends ActionBarActivity implements EditMessageFragme
     @Override
     public void onSendClick(String message) {
         Log.d(TAG, message);
+
+        Fragment displayFragment = DisplayMessageFragment.newInstance(message);
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.container_display, displayFragment)
+                .commit();
     }
 }
